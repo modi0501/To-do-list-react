@@ -18,11 +18,12 @@ class App extends React.Component {
   }
 
   inputSubmitHandler(event) {
-    this.setState((prevState) => ({
-      ...prevState,
-      taskArray: [...prevState.taskArray, prevState.currentTask],
-    }));
     event.preventDefault();
+    if (!this.state.currentTask) return;
+    this.setState((prevState) => ({
+      taskArray: [...prevState.taskArray, prevState.currentTask],
+      currentTask: "",
+    }));
   }
 
   render() {
@@ -33,6 +34,7 @@ class App extends React.Component {
         <Input
           inputSubmitHandler={this.inputSubmitHandler}
           inputChangeHandler={this.inputChangeHandler}
+          value={this.state.currentTask}
         />
         <TaskList taskArray={taskArray} />
       </div>

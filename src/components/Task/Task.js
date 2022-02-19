@@ -1,4 +1,5 @@
 import React from "react";
+import "./Task.css";
 
 class Task extends React.Component {
   constructor(props) {
@@ -7,7 +8,7 @@ class Task extends React.Component {
 
   render() {
     const task = this.props.task;
-    return <div>{task}</div>;
+    return <div className="task">{task}</div>;
   }
 }
 

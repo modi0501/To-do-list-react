@@ -1,16 +1,7 @@
 import React from "react";
 import "./App.css";
 import Input from "./components/Input/input";
-
-// const App = () => {
-//   return (
-//     <div className="App">
-//       <h1>Hello there</h1>
-//       <Input inputSubmitHandler={() => {}} inputChangeHandler={() => {}} />
-//     </div>
-//   );
-// };
-
+import TaskList from "./components/TaskList/TaskList";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -35,6 +26,7 @@ class App extends React.Component {
   }
 
   render() {
+    const taskArray = this.state.taskArray;
     return (
       <div className="App">
         <h1>To Do List</h1>
@@ -42,6 +34,7 @@ class App extends React.Component {
           inputSubmitHandler={this.inputSubmitHandler}
           inputChangeHandler={this.inputChangeHandler}
         />
+        <TaskList taskArray={taskArray} />
       </div>
     );
   }

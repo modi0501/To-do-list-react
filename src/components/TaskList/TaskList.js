@@ -8,8 +8,14 @@ class TaskList extends React.Component {
 
   render() {
     const taskArray = this.props.taskArray;
-    const taskList = taskArray.map((task, index) => (
-      <Task key={index} task={task} />
+    const taskList = taskArray.map((taskElement, index) => (
+      <Task
+        key={index}
+        taskElement={taskElement}
+        checkboxHandler={(event) =>
+          event && this.props.taskCheckedHandler(index)
+        }
+      />
     ));
     return <div className="taskList">{taskList}</div>;
   }

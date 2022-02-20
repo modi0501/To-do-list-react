@@ -8,3 +8,8 @@
   font-size: large;
   word-wrap: break-word;
 }
+
+.removed {
+  opacity: 0.5;
+  text-decoration: line-through;
+}

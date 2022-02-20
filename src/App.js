@@ -8,6 +8,7 @@ class App extends React.Component {
     this.state = { currentTask: "", taskArray: [] };
     this.inputChangeHandler = this.inputChangeHandler.bind(this);
     this.inputSubmitHandler = this.inputSubmitHandler.bind(this);
+    this.taskCheckedHandler = this.taskCheckedHandler.bind(this);
   }
 
   inputChangeHandler(event) {
@@ -21,8 +22,25 @@ class App extends React.Component {
     event.preventDefault();
     if (!this.state.currentTask) return;
     this.setState((prevState) => ({
-      taskArray: [...prevState.taskArray, prevState.currentTask],
+      taskArray: [
+        ...prevState.taskArray,
+        { task: prevState.currentTask, removed: false },
+      ],
       currentTask: "",
+    }));
+  }
+
+  taskCheckedHandler(index) {
+    this.setState((prevState) => ({
+      taskArray: prevState.taskArray.map((element, eIndex) => {
+        if (eIndex === index) {
+          return {
+            task: element.task,
+            removed: !element.removed,
+          };
+        }
+        return element;
+      }),
     }));
   }
 
@@ -36,7 +54,11 @@ class App extends React.Component {
           inputChangeHandler={this.inputChangeHandler}
           value={this.state.currentTask}
         />
-        <TaskList taskArray={taskArray} />
+        <TaskList
+          taskArray={taskArray}
+          checkboxHandler={this.checkboxHandler}
+          taskCheckedHandler={this.taskCheckedHandler}
+        />
       </div>
     );
   }

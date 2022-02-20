@@ -7,8 +7,13 @@ class Task extends React.Component {
   }
 
   render() {
-    const task = this.props.task;
-    return <div className="task">{task}</div>;
+    const taskElement = this.props.taskElement;
+    return (
+      <div className={!taskElement.removed ? "task" : "task removed"}>
+        <input type="checkbox" onChange={this.props.checkboxHandler} />
+        {taskElement.task}
+      </div>
+    );
   }
 }
 

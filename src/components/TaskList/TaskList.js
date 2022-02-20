@@ -17,7 +17,12 @@ class TaskList extends React.Component {
         }
       />
     ));
-    return <div className="taskList">{taskList}</div>;
+    return (
+      <div className="taskList">
+        {!taskList.length && <h3>Nothing on your list!</h3>}
+        {taskList.length > 0 && taskList}
+      </div>
+    );
   }
 }
 

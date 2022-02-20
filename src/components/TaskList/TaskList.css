@@ -1,3 +1,7 @@
 .taskList {
   margin: 0 15%;
 }
+
+h3 {
+  font-weight: 500;
+}

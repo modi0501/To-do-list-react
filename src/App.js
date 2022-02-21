@@ -1,38 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import Input from "./components/Input/input";
 import TaskList from "./components/TaskList/TaskList";
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { currentTask: "", taskArray: [] };
-    this.inputChangeHandler = this.inputChangeHandler.bind(this);
-    this.inputSubmitHandler = this.inputSubmitHandler.bind(this);
-    this.taskCheckedHandler = this.taskCheckedHandler.bind(this);
-  }
 
-  inputChangeHandler(event) {
-    this.setState((prevState) => ({
-      ...prevState,
-      currentTask: event.target.value,
-    }));
-  }
+const App = (props) => {
+  const [currentTask, setCurrentTask] = useState("");
+  const [taskArray, setTaskArray] = useState([]);
 
-  inputSubmitHandler(event) {
+  const inputChangeHandler = (event) => {
+    setCurrentTask((prevState) => {
+      return event.target.value;
+    });
+  };
+
+  const inputSubmitHandler = (event) => {
     event.preventDefault();
-    if (!this.state.currentTask) return;
-    this.setState((prevState) => ({
-      taskArray: [
-        ...prevState.taskArray,
-        { task: prevState.currentTask, removed: false },
-      ],
-      currentTask: "",
-    }));
-  }
+    if (!currentTask) return;
+    setTaskArray((prevState) => {
+      return [...prevState, { task: currentTask, removed: false }];
+    });
+    setCurrentTask("");
+  };
 
-  taskCheckedHandler(index) {
-    this.setState((prevState) => ({
-      taskArray: prevState.taskArray.map((element, eIndex) => {
+  const taskCheckedHandler = (index) => {
+    setTaskArray((prevState) => {
+      return prevState.map((element, eIndex) => {
         if (eIndex === index) {
           return {
             task: element.task,
@@ -40,28 +32,20 @@ class App extends React.Component {
           };
         }
         return element;
-      }),
-    }));
-  }
-
-  render() {
-    const taskArray = this.state.taskArray;
-    return (
-      <div className="App">
-        <h1>To Do List</h1>
-        <Input
-          inputSubmitHandler={this.inputSubmitHandler}
-          inputChangeHandler={this.inputChangeHandler}
-          value={this.state.currentTask}
-        />
-        <TaskList
-          taskArray={taskArray}
-          checkboxHandler={this.checkboxHandler}
-          taskCheckedHandler={this.taskCheckedHandler}
-        />
-      </div>
-    );
-  }
-}
+      });
+    });
+  };
+  return (
+    <div className="App">
+      <h1>To Do List</h1>
+      <Input
+        inputSubmitHandler={inputSubmitHandler}
+        inputChangeHandler={inputChangeHandler}
+        value={currentTask}
+      />
+      <TaskList taskArray={taskArray} taskCheckedHandler={taskCheckedHandler} />
+    </div>
+  );
+};
 
 export default App;
